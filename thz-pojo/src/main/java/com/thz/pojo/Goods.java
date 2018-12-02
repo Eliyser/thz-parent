@@ -1,4 +1,4 @@
-package com.thz;
+package com.thz.pojo;
 
 /**
  * @Author haien
@@ -226,28 +226,3 @@ public class Goods {
         this.result = result;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

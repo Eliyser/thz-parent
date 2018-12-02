@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!-- 自动扫描 -->
-    <context:component-scan base-package="com.thz.service" /> <!--java目录是根目录-->
+    <context:component-scan base-package="com.thz.*.**"/> <!--java目录是根目录-->
 
+    <!-- 指定Spring加载资源文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
     <!-- 配置数据源 -->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/thzdb"/>
-        <property name="username" value="thz"/>
-        <property name="password" value="111111"/>
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
     </bean>
 
     <!-- 配置mybatis的sqlSessionFactory -->
@@ -32,6 +36,18 @@
         <property name="mapperLocations" value="classpath:mappers/*.xml"></property>
         <!-- mybatis配置文件 -->
         <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                            reasonable=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
 
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
@@ -71,8 +87,9 @@
     <!-- 配置事务切面 -->
     <aop:config>
         <aop:pointcut id="serviceOperation"
-                      expression="execution(* com.thz.service.*.*(..))" />
+                      expression="execution(* com.thz.service.impl.*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
     </aop:config>
 
+    <tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

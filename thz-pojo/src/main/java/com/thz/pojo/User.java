@@ -1,4 +1,4 @@
-package com.thz;
+package com.thz.pojo;
 
 /**
  * @Author haien

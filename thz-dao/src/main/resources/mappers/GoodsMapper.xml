@@ -2,8 +2,36 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.java1234.user.dao.UserDao">
+<mapper namespace="com.thz.dao.GoodsDao">
 
-    <select></select>
+    <!--搜索结果应该只需要id跟物质名-->
+    <resultMap type="Goods" id="GoodsResult">
+        <result property="id" column="id"></result>
+        <result property="name" column="name"></result>
+    </resultMap>
+
+    <select id="searchByType" resultMap="GoodsResult">
+        select * from goods
+        <where>
+            <if test="type!=null">type=#{type}</if>
+            <if test="reportDateTime1!=null">and Report_Date_Time>=#{reportDateTime1}</if>
+            <if test="reportDateTime2!=null">and Report_Date_Time <![CDATA[ <= ]]> #{reportDateTime2}</if>
+            <if test="number!=null">and number=#{number}</if> <!--包装在类中，则number!=0(Goods把number定义为long型，默认值为0,；包装在Map中，则number!=null（Map把它定义为Object,默认值为null）-->
+            <if test="name!=null">and name=#{name}</if>
+        </where>
+        order by Report_Date_Time DESC
+    </select>
+
+    <select id="fuzzySearch" resultMap="GoodsResult">
+        select * from goods where number=#{_parameter} or name like '%${_parameter}%' or type=#{_parameter} order by Report_Date_Time desc
+    </select>
+
+    <select id="findAll" resultMap="GoodsResult">
+        select * from goods order by Report_Date_Time DESC
+    </select>
+
+    <select id="findAllOrderByTime" resultMap="GoodsResult">
+        select *,ABS(TIMESTAMPDIFF(second,#{_parameter},Report_Date_Time)) as diffTime from goods order by diffTime ASC
+    </select>
 
 </mapper>
