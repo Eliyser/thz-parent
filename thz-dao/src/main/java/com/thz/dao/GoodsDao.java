@@ -27,7 +27,7 @@ public interface GoodsDao {
      * @Param [params]
      * @return java.util.List<com.thz.pojo.Goods>
      **/
-    public List<Goods> searchByType(Map<String,Object> params);
+    public Goods searchByType(Map<String,Object> params);
 
     /**
      * @Author haien
@@ -46,6 +46,15 @@ public interface GoodsDao {
      * @return java.util.List<com.thz.pojo.Goods>
      **/
     public List<Goods> findAllOrderByTime(String reportDateTime);
+
+    /**
+     * @Author haien
+     * @Description 类型遍历
+     * @Date 2019/1/14
+     * @Param [pageNum, size, type]
+     * @return java.util.List<com.thz.pojo.Goods>
+     **/
+    public List<Goods> findByType(String type);
 }
 
 

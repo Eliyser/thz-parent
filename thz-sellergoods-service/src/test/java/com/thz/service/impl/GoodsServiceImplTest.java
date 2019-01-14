@@ -28,16 +28,10 @@ public class GoodsServiceImplTest {
     public void searchByType(){
         Map<String,Object> params=new HashMap<>();
         //params.put("number",1L);
-        params.put("reportDateTime1","2017/10/02 13:11/11");
-        params.put("reportDateTime2","2018/12/02 10:20:04");
+        params.put("reportDateTime","2017/10/02 13:11/11");
         //params.put("name","食用油");
         //params.put("type","液体");
-        List<Goods> goodsList=goodsService.searchByType(0,5,params);
-        PageInfo<Goods> goodsPageInfo=new PageInfo<>(goodsList);
-        for(Goods goods:goodsList){
-            System.out.println(goods.getName());
-        }
-        Assert.assertThat(goodsPageInfo.getTotal(),is(3L));
+        Goods goods=goodsService.searchByType(params);
     }
 
     @Test

@@ -1,0 +1,11 @@
+1、接口名称：GoodsController
+url:/goods/query?参数
+接收参数：【必须】页码pageNum，每页行数rows；【可选】模糊查询标志fuzzy，模糊查询关键词keyWord；类型遍历关键词之类型type，
+返回参数：物质集合（分页）
+功能：根据前端传入的页码和每页行数，若参数中含有fuzzy，则按照名称、类型、次数和时间（注意：时间格式必须为2018/12/02 10:20:04）对keyWord进行模糊查询，无keyWord则进行空搜，遍历所有记录并按时间从最近开始排序；否则进行类型遍历，根据类型字段查询记录并按时间从最近开始排序；最后返回查询结果和总页数、总记录数等信息。
+
+2、接口名称：GoodsController
+url：goods/query/bytype?参数
+接收参数：分类查询关键词之物质名name、次数number、时间reportDateTime
+返回参数：物质
+功能：根据名称name、时间reportDatetime和次数number进行分类查询，返回查询到的一条物质记录等信息。

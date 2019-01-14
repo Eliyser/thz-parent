@@ -29,9 +29,16 @@ public class GoodsController {
     //日志
     public static final Logger logger=LoggerFactory.getLogger(GoodsController.class);
 
+    /**
+     * @Author haien
+     * @Description 模糊查询与类型遍历
+     * @Date 2019/1/14
+     * @Param [request, response]
+     * @return void
+     **/
     @RequestMapping(value="/query",method = RequestMethod.GET)
     public void queryGoods(HttpServletRequest request,HttpServletResponse response){
-        //模糊查询|分类查询标志
+        //模糊查询标志
         String fuzzy=request.getParameter("fuzzy");
         //页码
         String pageNum=request.getParameter("pageNum");
@@ -40,6 +47,7 @@ public class GoodsController {
 
         //参数不完整
         if(null==pageNum||null==rows){
+            //被GlobalExceptionHandler捕获处理并生成错误报文
             throw new InvalidParameterException("参数异常，请重新发送请求！");
         }
 
@@ -47,7 +55,6 @@ public class GoodsController {
         int size=Integer.parseInt(rows);
         //当前页码
         int currentPage=Integer.parseInt(pageNum)-1;
-        Map<String,Object> params=new HashMap<>();
         List<Goods> goodsList=null;
         PageInfo<Goods> goodsPageInfo=null;
 
@@ -56,47 +63,21 @@ public class GoodsController {
             //搜索关键词
             String keyWord=request.getParameter("keyWord");
             //空搜
-            if(StringUtil.isNull("keyWord")){
+            if(StringUtil.isNull(keyWord)){
                 logger.info("空搜--默认查询最近检测的所有物质");
                 goodsList=goodsService.findAll(currentPage,size);
-
             }
             else{
                 logger.info("模糊查询--关键词："+keyWord);
                 goodsList=goodsService.fuzzySearch(currentPage,size,keyWord);
             }
         }
-        //分类查询
+        //类型遍历
         else{
-            //空搜
-            if(StringUtil.isNull("type")&&StringUtil.isNull("name")
-                    &&StringUtil.isNull("reportDateTime1")&&StringUtil.isNull("reportDateTime2")
-                    &&StringUtil.isNull("number")){
-                logger.info("空搜--默认查询最近检测的所有物质");
-                goodsList=goodsService.findAll(currentPage,size);
-            }
-            else{
-                //种类
-                String type=request.getParameter("type");
-                //根据时间段查询（前端必须保证未选择的时间单位默认为0）
-                String reportDateTime1=request.getParameter("reportDateTime1"); //时间上限，查询结果时间全部比它小
-                String reportDateTime2=request.getParameter("reportDateTime2"); //时间下限
-                //次数
-                String number=request.getParameter("number");
-                //物质名
-                String name=request.getParameter("name");
-
-                logger.info("分类查询--关键词：type="+type+"name="+name
-                        +"timeScope="+reportDateTime1+"~"+reportDateTime2+"number="+number);
-                params.put("type",type);
-                params.put("name",name);
-                params.put("reportDateTime1",reportDateTime1);
-                params.put("reportDateTime2",reportDateTime2);
-                params.put("number",number);
-                goodsList=goodsService.searchByType(currentPage,size,params);
-            }
+            String type=request.getParameter("type");
+            goodsList=goodsService.findByType(currentPage,size,type);
         }
-        //返回结果目前只包括id、name
+
         goodsPageInfo=new PageInfo<>(goodsList);
         JSONObject result=new JSONObject();
         //结果集合
@@ -106,6 +87,40 @@ public class GoodsController {
         //总记录数
         result.put("totalRecords",goodsPageInfo.getTotal());
         //返回结果
+        ServletUtil.createSuccessResponse(200,result,response);
+    }
+
+    /**
+     * @Author haien
+     * @Description 分类查询
+     * @Date 2019/1/14
+     * @Param [request, response]
+     * @return void
+     **/
+    @RequestMapping(value="/query/bytype",method = RequestMethod.GET)
+    public void queryGoodsByType(HttpServletRequest request,HttpServletResponse response){
+        //时间
+        String reportDateTime = request.getParameter("reportDateTime");
+        //次数
+        String number = request.getParameter("number");
+        //物质名
+        String name = request.getParameter("name");
+
+        logger.info("分类查询--关键词：name=" + name
+                + "time=" + reportDateTime + "number=" + number);
+
+        //参数异常
+        if (StringUtil.isNull(reportDateTime) || StringUtil.isNull(number) || StringUtil.isNull(name)) {
+            throw new InvalidParameterException("存在空白参数，请重新发送请求！");
+        }
+
+        Map<String,Object> params=new HashMap<>();
+        params.put("name", name);
+        params.put("reportDateTime", reportDateTime);
+        params.put("number", number);
+        Goods goods = goodsService.searchByType(params);
+        JSONObject result=new JSONObject();
+        result.put("goods",goods);
         ServletUtil.createSuccessResponse(200,result,response);
     }
 }

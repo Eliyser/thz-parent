@@ -11,15 +11,7 @@
     </resultMap>
 
     <select id="searchByType" resultMap="GoodsResult">
-        select * from goods
-        <where>
-            <if test="type!=null">type=#{type}</if>
-            <if test="reportDateTime1!=null">and Report_Date_Time>=#{reportDateTime1}</if>
-            <if test="reportDateTime2!=null">and Report_Date_Time <![CDATA[ <= ]]> #{reportDateTime2}</if>
-            <if test="number!=null">and number=#{number}</if> <!--包装在类中，则number!=0(Goods把number定义为long型，默认值为0,；包装在Map中，则number!=null（Map把它定义为Object,默认值为null）-->
-            <if test="name!=null">and name=#{name}</if>
-        </where>
-        order by Report_Date_Time DESC
+        select * from goods where Report_Date_Time=#{reportDateTime} and number=#{number} and name=#{name} order by Report_Date_Time DESC <!--包装在类中，则number!=0(Goods把number定义为long型，默认值为0,；包装在Map中，则number!=null（Map把它定义为Object,默认值为null）-->
     </select>
 
     <select id="fuzzySearch" resultMap="GoodsResult">
@@ -32,6 +24,10 @@
 
     <select id="findAllOrderByTime" resultMap="GoodsResult">
         select *,ABS(TIMESTAMPDIFF(second,#{_parameter},Report_Date_Time)) as diffTime from goods order by diffTime ASC
+    </select>
+
+    <select id="findByType" resultMap="GoodsResult">
+        select * from goods where type=#{type} order by Report_Date_Time desc
     </select>
 
 </mapper>

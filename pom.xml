@@ -304,6 +304,5 @@
         <module>thz-sellergoods-service</module>
         <module>thz-manager-web</module>
         <module>thz-shop-web</module>
-        <module>thz-pojo</module>
     </modules>
 </project>

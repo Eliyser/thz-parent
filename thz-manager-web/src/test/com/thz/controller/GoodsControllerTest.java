@@ -13,8 +13,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.annotation.Resource;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:applicationContext.xml"})
 public class GoodsControllerTest {
@@ -32,9 +30,9 @@ public class GoodsControllerTest {
     @Test
     public void queryGoods() throws Exception {
         //String url="/goods/query?fuzzy=fuzzy&pageNum=1&rows=5&keyWord=液体";
-        //String url="/goods/query?pageNum=1&rows=5&reportDateTime1=2018/11/08 21:19:08&reportDateTime2=2018/12/02 11:30:50";
-        //String url="/goods/query?pageNum=1&rows=5&reportDateTime1=2018/11/08 21:19:08";
-        String url="/goods/query?pageNum=1&rows=5&reportDateTime2=2018/11/08 21:19:08";
+        //String url="/goods/query?fuzzy=fuzzy&pageNum=1&rows=5&keyWord=2018/11/08 21:19:08";
+        //String url="/goods/query?pageNum=1&rows=5&type=液体";
+        String url="/goods/query/bytype?reportDateTime=2018/12/02 10:20:04&name=青铜&number=2";
         ResultActions resultActions=mockMvc.perform(MockMvcRequestBuilders.get(url));
         MvcResult mvcResult=resultActions.andReturn();
         String result=mvcResult.getResponse().getContentAsString();

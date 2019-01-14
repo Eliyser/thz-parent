@@ -36,9 +36,7 @@ public class GoodsServiceImpl implements GoodsService {
      * @return java.util.List<com.thz.pojo.Goods>
      **/
     @Override
-    public List<Goods> searchByType(int pageNum,int size,Map<String,Object> params){
-        //物理分页：设置起始页码和容量
-        PageHelper.startPage(pageNum,size);
+    public Goods searchByType(Map<String,Object> params){
         return goodsDao.searchByType(params);
     }
 
@@ -54,5 +52,11 @@ public class GoodsServiceImpl implements GoodsService {
         //物理分页：设置起始页码和容量
         PageHelper.startPage(pageNum,size);
         return goodsDao.findAllOrderByTime(null);
+    }
+
+    @Override
+    public List<Goods> findByType(int pageNum,int size,String type) {
+        PageHelper.startPage(pageNum,size);
+        return goodsDao.findByType(type);
     }
 }
