@@ -34,7 +34,6 @@
 
     <dependencyManagement>
         <dependencies>
-
             <!-- Spring核心依赖：core/bean/context -->
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -46,6 +45,17 @@
                 <artifactId>spring-beans</artifactId> <!--包含配置文件，创建和管理bean-->
                 <version>${spring.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId> <!--包含配置文件，创建和管理bean-->
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
 
             <!--sping web依赖-->
             <dependency>
@@ -68,11 +78,6 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-jms</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context-support</artifactId>
                 <version>${spring.version}</version>
             </dependency>
 

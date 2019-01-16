@@ -31,8 +31,8 @@ public class GoodsControllerTest {
     public void queryGoods() throws Exception {
         //String url="/goods/query?fuzzy=fuzzy&pageNum=1&rows=5&keyWord=液体";
         //String url="/goods/query?fuzzy=fuzzy&pageNum=1&rows=5&keyWord=2018/11/08 21:19:08";
-        //String url="/goods/query?pageNum=1&rows=5&type=液体";
-        String url="/goods/query/bytype?reportDateTime=2018/12/02 10:20:04&name=青铜&number=2";
+        String url="/goods/query?pageNum=1&rows=5&type=液体";
+        //String url="/goods/query/bytype?reportDateTime=2018/12/02 10:20:04&name=青铜&number=2";
         ResultActions resultActions=mockMvc.perform(MockMvcRequestBuilders.get(url));
         MvcResult mvcResult=resultActions.andReturn();
         String result=mvcResult.getResponse().getContentAsString();
