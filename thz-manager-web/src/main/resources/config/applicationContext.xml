@@ -16,10 +16,10 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!-- 自动扫描 -->
-    <context:component-scan base-package="com.thz.*.**"/> <!--java目录是根目录-->
+    <context:component-scan base-package="com.thz.*.**"/> <!--java目录是根目录；com.thz.service-->
 
     <!-- 指定Spring加载资源文件 -->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:property-placeholder location="classpath:config/jdbc.properties"/>
     <!-- 配置数据源 -->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -35,7 +35,7 @@
         <!-- 自动扫描mappers.xml文件 -->
         <property name="mapperLocations" value="classpath:mappers/*.xml"></property>
         <!-- mybatis配置文件 -->
-        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <property name="configLocation" value="classpath:config/mybatis-config.xml"></property>
         <!--分页插件-->
         <property name="plugins">
             <array>

@@ -75,6 +75,7 @@ public class GoodsController {
         //类型遍历
         else{
             String type=request.getParameter("type");
+            logger.info("类型遍历--类型type："+type);
             goodsList=goodsService.findByType(currentPage,size,type);
         }
 

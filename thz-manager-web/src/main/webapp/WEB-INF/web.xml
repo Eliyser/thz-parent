@@ -2,13 +2,22 @@
 <web-app>
   <display-name>thzWeb</display-name>
 
+  <!-- Spring配置 -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:config/applicationContext.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
   <!--配置SpringMvc DispatcherServlet前端控制器-->
   <servlet>
     <servlet-name>springmvc</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:spring-mvc.xml</param-value>
+      <param-value>classpath:config/spring-mvc.xml</param-value>
     </init-param>
   </servlet>
   <!--servlet映射声明-->
