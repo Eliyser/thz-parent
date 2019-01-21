@@ -25,7 +25,7 @@
     <!--视图解析器-->
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/" /> <!--根目录webapp-->
+        <property name="prefix" value="/" /> <!--根目录webapp，用./、../或classpath都找不到resources目录-->
         <property name="suffix" value=".jsp"></property> <!-- 把Controller类的返回值都解析到html页面 -->
     </bean>
 </beans>
