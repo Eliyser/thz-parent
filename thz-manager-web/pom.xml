@@ -23,19 +23,23 @@
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
-    <dependencies>
+    <!--日志版本管理-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>2.9.1</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
+    <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -68,7 +72,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -119,6 +122,40 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
+
+        <!--日志-->
+        <dependency> <!--log4j2核心包-->
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency> <!--log4j2核心包-->
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency> <!--web项目需要-->
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-web</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency> <!--没有的话报错：Unable to invoke factory method in class org.apache.logging.log4j.core.async.AsyncLoggerConfig-->
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>3.4.2</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency> <!--用于与slf4j桥接-->
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- slf4j核心包,已包含在com.github.miemiedev:mybatis-paginator中-->
+        <!--<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            一般都是匹配这个版本<version>1.7.25</version>
+        </dependency>-->
 
         <dependency>
             <groupId>com.thz.pojo</groupId>

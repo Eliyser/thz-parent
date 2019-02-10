@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
   <display-name>thzWeb</display-name>
+  <welcome-file-list>
+    <welcome-file>/jsp/index.jsp</welcome-file>
+  </welcome-file-list>
 
   <!-- 编码过滤器，强制使用UTF-8，防止编码问题 -->
   <filter>
@@ -23,8 +26,11 @@
   <!--配置文件位置，只能这么写，不能拆开来写两次-->
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:config/applicationContext.xml
-      classpath:config/spring-security.xml</param-value>
+    <!--配置文件方式配置spring security-->
+    <!--<param-value>classpath:config/applicationContext.xml
+      classpath:config/spring-security.xml</param-value>-->
+    <!--改用Java Configuration方式-->
+    <param-value>classpath:config/applicationContext.xml</param-value>
   </context-param>
 
   <!-- SpringMvc监听器：启动时会注册一些事件，然后监控系统的请求情况 -->
@@ -54,21 +60,37 @@
   <!--Spring Security代理Servlet过滤器-->
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
-    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> <!--delegate:代表-->
+    <filter-class>
+      org.springframework.web.filter.DelegatingFilterProxy
+    </filter-class> <!--delegate:代表-->
   </filter>
-  <filter-mapping>
+  <filter-mapping> <!--虽然配置文件配置了拦截所有，但是这里依旧要配置拦截规则，否则连过滤器都进不去-->
      <filter-name>springSecurityFilterChain</filter-name>
      <url-pattern>/*</url-pattern>
   </filter-mapping>
 
   <!-- session监听-->
   <listener>
-      <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+      <!--清理过期session-->
+      <listener-class>
+        org.springframework.security.web.session.HttpSessionEventPublisher
+      </listener-class>
   </listener>
   <!-- session过期时间 -->
   <session-config>
     <session-timeout>1800</session-timeout>
   </session-config>
+
+  <!-- log4j2配置文件路径 -->
+  <context-param>
+    <param-name>log4jConfiguration</param-name>
+    <param-value>classpath:config/log4j2.xml</param-value>
+  </context-param>
+  <!-- 加载log4j配置文件 -->
+  <!--<listener>
+    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+  </listener>-->
+
 </web-app>
 
 

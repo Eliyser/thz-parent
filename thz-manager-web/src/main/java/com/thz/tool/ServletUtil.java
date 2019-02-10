@@ -58,7 +58,6 @@ public class ServletUtil {
         response.setContentType(RESPONSE_CONTENTTYPE);
         response.setStatus(httpCode);
 
-
         PrintWriter printWriter=null;
         String jsonString="";
         try { //必须捕获，不能抛出，因为要保证资源被关闭

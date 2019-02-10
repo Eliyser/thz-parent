@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+    <properties>
+        <property name="LOG_HOME">../logs</property>
+        <property name="FORMAT">%d{HH:mm:ss.SSS} [%t] %-5p [%c] - %m%n</property>
+        <!--按月份文件夹，按天分文件-->
+        <property name="FILE_PATTERN">$${date:yyyy-MM}/web-%d{MM-dd-yyyy}-%i</property>
+    </properties>
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout pattern="${FORMAT}"/>
+        </Console>
+
+        <RollingRandomAccessFile name="ToFile" fileName="${LOG_HOME}/logFile.log"
+                filePattern="${LOG_HOME}/ng${FILE_PATTERN}.log.zip">
+            <PatternLayout pattern="${FORMAT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="1MB"/>
+            </Policies>
+
+            <DefaultRolloverStrategy max="60" compressionLevel="9"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <AsyncRoot level="debug">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="ToFile"/>
+        </AsyncRoot>
+
+        <AsyncLogger name="org.springframework" level="debug" additivity="false"></AsyncLogger>
+        <AsyncLogger name="org.mybatis" level="debug" additivity="false"></AsyncLogger>
+    </Loggers>
+</Configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
