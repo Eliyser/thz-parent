@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -38,9 +37,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //自定义认证成功处理器
     @Resource
     private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
-    //自定义认证失败处理器
-    @Resource
-    private AuthenticationFailureHandler myAuthenticationFailureHandler;
 
     /**
      * 密码加密
