@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,12 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 public class GlobalExceptionHandler {
     private static final Logger logger=LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ResponseBody
     @ExceptionHandler(value=Exception.class) //处理Exception层Exception及其子类
+    // @ResponseBody
     public void defaultHandler(HttpServletResponse response, Exception e){
-        logger.error(e.getMessage(),e);
+        String message=e.getMessage();
+        logger.error(message,e);
         //生成错误报文
-        ServletUtil.createErrorResponse(500,null,null,e.getMessage(),response);
+        if(null==message)   message=e.getClass().getName(); //系统异常无描述则用异常类名作为描述
+        ServletUtil.createErrorResponse(500,500,null,message,response);
     }
 }
 

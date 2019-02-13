@@ -47,11 +47,13 @@ public class ServletUtil {
      * @Author haien
      * @Description 生成成功报文
      * @Date 2018/12/1
-     * @Param [httpCode, result, serializerFeature, filter, response]
+     * @Param [httpCode状态码, result:JSONObject, serializerFeature序列化属性
+     *          , filter序列化属性, response]
      * @return java.lang.String
      **/
     public static String createSuccessResponse(Integer httpCode, Object result,
-                                               SerializerFeature serializerFeature,SerializeFilter filter,
+                                               SerializerFeature serializerFeature,
+                                               SerializeFilter filter,
                                                HttpServletResponse response) {
 
         response.setCharacterEncoding(RESPONSE_CHARACTERENCODING);
@@ -62,7 +64,7 @@ public class ServletUtil {
         String jsonString="";
         try { //必须捕获，不能抛出，因为要保证资源被关闭
             printWriter=response.getWriter();
-            //如果result为空，那么客户端打印空白；不能抛出异常，因为抛出了就需要生成错误报文，不要为这种几乎不可能的异常浪费controller的代码
+            //如果result为空，那么客户端打印空白；不要抛出异常，因为抛出了就需要生成错误报文，不要为这种几乎不可能的异常浪费controller的代码
             if(null!=result) {
                 //是否定制序列化
                 if (null != filter)
@@ -101,7 +103,7 @@ public class ServletUtil {
      * @Author haien
      * @Description 生成错误报文
      * @Date 2018/12/1
-     * @Param [httpStatus, resCode, code, message, response]
+     * @Param [httpStatus状态码, resCode应该也是状态码, code应该是请求网址, message错误信息, response]
      * @return java.lang.String
      **/
     public static String createErrorResponse(Integer httpStatus,Integer resCode,Object code,
@@ -112,13 +114,15 @@ public class ServletUtil {
         response.setStatus(httpStatus);
         code=BIZ_NAME+code; //不过这个BIZ_NAME不知道怎么生成的
 
-        PrintWriter printWriter=null;
-        String jsonString="";
         Map<String,Object> map=new HashMap<>();
         map.put("code",code); //不要管这些参数是否为空，空的话客户端显示很多空信息也没事，但处理成抛异常的话又要生成一遍错误报文
         map.put("message",message);
         map.put("res_code",resCode);
         map.put("server_time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+
+        String jsonString="";
+        //不写出到客户端也会自动写出去的
+        PrintWriter printWriter=null;
         try {
             printWriter=response.getWriter();
             jsonString=JSON.toJSONString(map,SerializerFeature.WriteMapNullValue);
@@ -131,7 +135,7 @@ public class ServletUtil {
                 printWriter.close();
             }
         }
-        return jsonString;
+        return jsonString; //会自动把json返回客户端显示
     }
 }
 

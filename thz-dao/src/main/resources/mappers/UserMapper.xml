@@ -38,4 +38,8 @@
         insert into user values(null,#{username},#{password},#{phone},#{email},#{registerTime},
         #{status},#{registerIp},#{loginTime},#{loginIp},#{sex})
     </insert>
+
+    <select id="findUserById" resultMap="UserResult">
+        select * from user where id=#{id}
+    </select>
 </mapper>

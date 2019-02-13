@@ -72,4 +72,34 @@ public class UserServiceImpl implements UserService {
         return userDao.insertUser(user);
     }
 
+    /**
+     * @Author haien
+     * @Description 根据id查找用户
+     * @Date 2019/2/12
+     * @Param [id]
+     * @return com.thz.pojo.User
+     **/
+    @Override
+    public User findUserById(int id) {
+        return userDao.findUserById(id);
+    }
+
+    /**
+     * @Author haien
+     * @Description 比对验证码是否有效
+     * @Date 2019/2/12
+     * @Param [verifyCode, request]
+     * @return boolean
+     **/
+    @Override
+    public boolean isVrfCodeRight(String verifyCode, String originCode,long createTime) {
+        if (!originCode.equals(verifyCode)) {
+            return false;
+        }
+        if (System.currentTimeMillis() - createTime > 1000 * 60 * 5) { //5分钟
+            return false;
+        }
+        return true;
+    }
+
 }

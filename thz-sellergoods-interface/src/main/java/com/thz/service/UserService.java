@@ -52,4 +52,22 @@ public interface UserService {
      * @return int
      **/
     public int addUser(User user);
+
+    /**
+     * @Author haien
+     * @Description 根据id查找用户
+     * @Date 2019/2/12
+     * @Param [id]
+     * @return com.thz.pojo.User
+     **/
+    public User findUserById(int id);
+
+    /**
+     * @Author haien
+     * @Description 比对验证码是否正确
+     * @Date 2019/2/10
+     * @Param [verifyCode]
+     * @return boolean
+     **/
+    public boolean isVrfCodeRight(String verifyCode,String originCode,long createTime);
 }

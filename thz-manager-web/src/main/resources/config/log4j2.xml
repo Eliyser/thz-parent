@@ -23,13 +23,13 @@
         </RollingRandomAccessFile>
     </Appenders>
     <Loggers>
-        <AsyncRoot level="debug">
+        <AsyncRoot level="info">
             <appender-ref ref="Console"/>
             <appender-ref ref="ToFile"/>
         </AsyncRoot>
 
-        <AsyncLogger name="org.springframework" level="debug" additivity="false"></AsyncLogger>
-        <AsyncLogger name="org.mybatis" level="debug" additivity="false"></AsyncLogger>
+        <AsyncLogger name="com.thz.dao" level="debug" additivity="false"></AsyncLogger>
+        <AsyncLogger name="org.springframework." level="info" additivity="false"></AsyncLogger>
     </Loggers>
 </Configuration>
 
