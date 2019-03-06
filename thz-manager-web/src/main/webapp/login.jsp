@@ -32,7 +32,7 @@
 			<tr height="80">
 				<td width="35%"></td>
 				<td width="15%">密&nbsp;&nbsp;码：</td>
-				<td><input type="password" value="${password }" name="password" id="password"/></td>
+				<td><input type="password" name="password" id="password"/></td>
 				<td width="30%"></td>
 			</tr>
 			<tr height="50">
@@ -50,7 +50,6 @@
 				<td width="35%"></td>
 				<td colspan="3">
 					<font color="red">${error }</font><!-- el表达式 -->
-					<font color="#FA5A50" size="3"> ${message }</font>
 				</td>
 			</tr>
 			<tr height="50">

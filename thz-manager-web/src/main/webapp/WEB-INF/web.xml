@@ -88,7 +88,7 @@
   </context-param>
   <!-- 加载log4j配置文件 -->
   <!--<listener>
-    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class> <!--已过期-->
   </listener>-->
 
 </web-app>

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.thz.dao</groupId>
+    <groupId>com.thz.controller</groupId>
     <artifactId>thz-manager-web</artifactId>
     <packaging>war</packaging>
 

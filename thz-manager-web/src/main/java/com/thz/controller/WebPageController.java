@@ -58,9 +58,11 @@ public class WebPageController {
      * @Param []
      **/
     @RequestMapping("/login")
-    public ModelAndView index() {
+    public ModelAndView index(@RequestParam(value = "error",required = false,
+            defaultValue = "0")String error) {
         logger.info("----请求登录页面----");
         ModelAndView modelAndView = new ModelAndView("/login");
+        modelAndView.addObject("error",error); //底层是放进request里
         return modelAndView;
     }
 

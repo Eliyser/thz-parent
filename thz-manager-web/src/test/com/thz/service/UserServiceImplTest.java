@@ -1,7 +1,6 @@
-package com.thz.service.impl;
+package com.thz.service;
 
 import com.thz.pojo.User;
-import com.thz.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,7 @@ import javax.annotation.Resource;
 import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath*:config/applicationContext.xml"}) //classpath:在当前项目查找；classpath*：在所有依赖的jar包的classpath下找
+@ContextConfiguration(locations={"classpath:config/applicationContext.xml"}) //classpath:在当前项目查找；classpath*：在所有依赖的jar包的classpath下找
 @Transactional
 public class UserServiceImplTest {
     @Resource

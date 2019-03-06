@@ -48,7 +48,7 @@ public class MyAuthenticationSuccessHandler
         user.setLoginTime(new Date());
         user.setLoginIp(IPUtils.getIP(request));
         //存入session
-        request.getSession().setAttribute("user",user);
+        //request.getSession().setAttribute("user",user);
         //更新数据库
         userService.updateUser(user);
 

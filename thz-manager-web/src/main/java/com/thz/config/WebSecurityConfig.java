@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -37,6 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //自定义认证成功处理器
     @Resource
     private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
+    //自定义认证失败处理器
+    @Resource
+    private AuthenticationFailureHandler myAuthenticationFailureHandler;
 
     /**
      * 密码加密
@@ -48,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * @Author haien
-     * @Description 添加自定义的用户验证
+     * @Description 添加自定义的用户服务
      * @Date 2019/1/23
      * @Param [authenticationManagerBuilder]
      * @return void
@@ -58,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         throws Exception{
         //auth.userDetailsService(myUserDetailsService());
         auth.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder()); //应该是把拦截到的表单密码加密
-        auth.authenticationProvider(myAuthenticationProvider);
+        //auth.authenticationProvider(myAuthenticationProvider); //本项目用不上自定义用户验证
     }
 /*
 
@@ -93,11 +97,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //自定义登录页面
                 .formLogin().loginPage("/login.jsp")
                 .failureUrl("/login.jsp?error=1")
+                .failureForwardUrl("/login.jsp?error=1")
                 .loginProcessingUrl("/spring_security_check")
-                .usernameParameter("username")
-                .passwordParameter("password")
+                //.usernameParameter("username") //4.x表单参数已定义为username、password
+                //.passwordParameter("password")
                 .successHandler(myAuthenticationSuccessHandler) //自定义认证成功处理器，主要是保存信息到库
-                //.failureHandler(myAuthenticationFailureHandler)
+                .failureHandler(myAuthenticationFailureHandler)
                 .permitAll()
                 //.defaultSuccessUrl("/jsp/index.jsp")
                 .and()

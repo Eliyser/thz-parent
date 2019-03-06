@@ -1,4 +1,10 @@
-.idea
+﻿.idea
 太赫兹光谱数据库
 版本依赖.xml
+target
+
+data
+logs
+out
+.gitignore
 target
